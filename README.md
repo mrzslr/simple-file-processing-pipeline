@@ -2,6 +2,9 @@
 
 A distributed system for processing image files using microservices and message queues.
 
+# Architecture overview
+
+![Architecture](screenshots/simple-file-processing-pipeline-architecture.png "simple-file-processing-pipeline-architecture")
 ## Technologies Used
 
 ### Languages and Frameworks
