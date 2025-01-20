@@ -60,17 +60,12 @@ The system consists of four microservices:
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd file-processing-pipeline
+cd simple-file-processing-pipeline
 ```
 
 2. Create necessary directories:
 ```bash
 mkdir -p uploads
-mkdir -p services/upload/app
-mkdir -p services/validation/app
-mkdir -p services/processing/app
-mkdir -p services/notification/app
-mkdir -p shared
 ```
 
 3. Build and start services:
