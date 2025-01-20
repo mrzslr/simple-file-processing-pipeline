@@ -1,0 +1,58 @@
+version: '3.7'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+
+  upload_service:
+    build: 
+      context: .
+      dockerfile: services/upload/Dockerfile
+    volumes:
+      - ./uploads:/app/uploads
+    ports:
+      - "5001:5000"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - UPLOAD_DIR=/app/uploads
+
+  validation_service:
+    build: 
+      context: .
+      dockerfile: services/validation/Dockerfile
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - UPLOAD_DIR=/app/uploads
+
+  processing_service:
+    build: 
+      context: .
+      dockerfile: services/processing/Dockerfile
+    volumes:
+      - ./uploads:/app/uploads
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
+      - UPLOAD_DIR=/app/uploads
+
+  notification_service:
+    build: 
+      context: .
+      dockerfile: services/notification/Dockerfile
+    depends_on:
+      - rabbitmq
+    environment:
+      - RABBITMQ_HOST=rabbitmq
